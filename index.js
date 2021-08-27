@@ -3,86 +3,102 @@ const fs = require('fs');
 const inquirer = require('inquirer');
 
 function generateName(firstName) {
-	return `# Hello, ${firstName}!\n\n`;
+    return `# Hello, ${firstName}!\n\n`;
 }
 
 function generateProjectTitle(projectTitle) {
-	return `##  ${projectTitle}.\n\n`;
+    return `##  ${projectTitle}.\n\n`;
 }
-function generateDescription(projectDescription){
+function generateDescription(projectDescription) {
     return `## Descrption ${projectDescription}`
 };
-function generateInstallationInstructions(projectInstall){
+function generateInstallationInstructions(projectInstall) {
     return `## Instalation Instructions ${projectInstall}`
 };
-function generateUsage(projectUsage){
+function generateUsage(projectUsage) {
     return `## Usage Instructions ${projectUsage}`
 };
+function generateContributing(projectContributing) {
+    return `## How to Contribute to this project ${projectContributing}`
+};
+function generateTest(projectTest) {
+    return `## Testing Instructions ${projectTest}`
+};
+function generateQuestion(projectQestions){
+    return `## Qestions ${projectQestions}`
+};
 inquirer
-	.prompt([
+    .prompt([
         {
             type: 'input',
             name: 'email',
             message: 'What is your email'
         },
-		{
-			type: 'input',
-			name: 'username',
-			message: 'What is your github username?',
-		},
         {
-            type:'input',
-            name:'repo name',
+            type: 'input',
+            name: 'username',
+            message: 'What is your github username?',
+        },
+        {
+            type: 'input',
+            name: 'repo name',
             message: 'What is the name of the repo?'
         },
-		{
-			type: 'input',
-			name: 'projectname',
-			message: 'What is the title of your project?',
-		},
+        {
+            type: 'input',
+            name: 'projectname',
+            message: 'What is the title of your project?',
+        },
         {
             type: 'input',
             name: 'description',
             message: 'Please provide a brief descption of your project.'
         },
         {
-            type:'input',
-            name:'installation',
+            type: 'input',
+            name: 'installation',
             message: 'Please provide directions for installation of your app.'
         },
         {
-            type:'input',
-            name:'usage',
+            type: 'input',
+            name: 'usage',
             message: 'Please provide usage directions for this project.'
         },
         {
-            type:'input',
-            name:'contributing',
+            type: 'input',
+            name: 'contributing',
             message: 'Do you have an contributors working on this project with'
         },
         {
-        type: 'list',
-        message: "Choose a license for your project.",
-        choices: ['GNU AGPLv3', 'GNU GPLv3', 'GNU LGPLv3', 'Mozilla Public License 2.0', 'Apache License 2.0', 'MIT License', 'Boost Software License 1.0', 'The Unlicense'],
-        name: 'license'
-    }
-	])
+            type: 'list',
+            message: "Choose a license for your project.",
+            choices: ['GNU AGPLv3', 'GNU GPLv3', 'GNU LGPLv3', 'Mozilla Public License 2.0', 'Apache License 2.0', 'MIT License', 'Boost Software License 1.0', 'The Unlicense'],
+            name: 'license'
+        },
+        {
+            type: 'input',
+            name: 'test',
+            message: 'What is the best way to test functionality?'
+        }
+    ])
 
-	.then(answers => {
-		console.log(answers);
+    .then(answers => {
+        console.log(answers);
 
-		let result = '';
-		result += generateName(answers.name);
-		result += generateProjectTitle(answers.projectname);
+        let result = '';
+        result += generateName(answers.name);
+        result += generateProjectTitle(answers.projectname);
         result += generateDescription(answers.description);
         result += generateInstallationInstructions(answers.installation);
         result += generateUsage(answers.usage);
-        result += 
+        result += generateContributing(answers.contributing);
+        result += generateTest(answers.test);
+        result += generateQuestion(answers.github, answers.email)
 
-		fs.writeFile('about.md', result, err => {
-			if (err) return err;
+        fs.writeFile('about.md', result, err => {
+            if (err) return err;
 
-			console.log('File created!');
-		});
+            console.log('File created!');
+        });
 
-	});
+    });
