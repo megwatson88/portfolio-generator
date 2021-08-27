@@ -17,14 +17,14 @@ function generateInstallationInstructions(projectInstall){
 };
 function generateUsage(projectUsage){
     return `## Usage Instructions ${projectUsage}`
-}
+};
 inquirer
 	.prompt([
         {
             type: 'input',
             name: 'email',
             message: 'What is your email'
-        }
+        },
 		{
 			type: 'input',
 			name: 'username',
